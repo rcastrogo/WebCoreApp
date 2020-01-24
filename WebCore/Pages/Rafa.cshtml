@@ -1,0 +1,381 @@
+﻿@page "/"
+@model RafaPageModel
+
+@using Microsoft.AspNetCore.Mvc.RazorPages
+
+@functions {
+
+  public class RafaPageModel: PageModel {
+
+      Core.Logging.LogManager _log;
+
+      public RafaPageModel(Core.Logging.LogManager log) {
+          _log = log;
+      }
+
+      public String Texto() {
+          //_log.Write("RafaPageModel->Texto()");
+          return "de inicio";
+      }
+  }
+
+
+}
+
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <title>Página @Model.Texto()</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <style type="text/css" media="screen">
+        @@import url(css/Estilo.css);
+        @@import url(css/Layout.css);
+        @@import url(css/Mobile-Layout.css);
+
+        #MainContainer {
+            overflow: auto;
+            overflow-x: hidden;
+            padding: 0.5em 0 .25em 0.5em;
+        }
+
+        .group-title {
+            float: left;
+            width: 100%;
+        }
+
+        .G5 {
+            width: 29.8em;
+            height: 12em;
+            float: left;
+            border: solid 1px silver;
+            border-radius: .5em;
+            margin: .5em;
+            box-sizing: border-box;
+            padding: 11px 8px 5px 56px;
+        }
+
+        .G5 {
+            position: relative;
+            transition: all 0.4s ease-in-out;
+        }
+
+            .G5:hover {
+                border-color: gray;
+            }
+
+            .G5 h5 {
+                margin: 0em;
+                margin-bottom: .2em;
+                border: none;
+                font-size: 1.3em;
+                color: navy;
+                background-color: white;
+                background-image: none;
+            }
+
+                .G5 h5 .task-sub-title {
+                    font-size: 90%;
+                    color: red;
+                    font-weight: normal;
+                    font-style: italic;
+                }
+
+                    .G5 h5 .task-sub-title:before {
+                        content: "\A";
+                        white-space: pre;
+                    }
+
+            .G5 a.link {
+                text-decoration: none;
+                margin: 0 .5em 0 0;
+            }
+
+        .G5-buttons {
+            position: absolute;
+            bottom: .2em;
+            left: .2em;
+            right: .2em;
+            padding: .5em;
+            border-top: solid 1px silver;
+            text-align: right;
+        }
+
+        .G5-image {
+            position: absolute;
+            top: .42em;
+            bottom: .42em;
+            left: .42em;
+            right: .42em;
+        }
+
+        .G5-image {
+            width: 5.4em;
+            height: 50px;
+            background: transparent url(img/Dlg_S_Sheet.png) no-repeat -47px -147px;
+        }
+
+        .dlg_image {
+            position: absolute;
+            top: .3em;
+            left: .4em;
+            width: 5em;
+            height: 5em;
+            background: transparent url(img/Dlg_S_Sheet.png) no-repeat 0 0;
+        }
+
+        .i_doc_info {
+            background-position: 0 -48px
+        }
+
+        .i_doc_rpt {
+            background-position: -48px -48px
+        }
+
+        .i_tables {
+            background-position: 6px -238px;
+        }
+
+        .i_tables_b {
+            background-position: 6px -289px;
+        }
+
+        .i_docs {
+            background-position: 2px -98px;
+        }
+
+        .i_users {
+            background-position: 2px -191px;
+        }
+
+        .i_export {
+            background-position: 0 -339px
+        }
+
+        .i_doc_ok {
+            background-position: -99px 0
+        }
+
+        .i_historico {
+            background-position: -192px -144px
+        }
+
+        .i_admin {
+            background-position: -240px -144px
+        }
+
+        .i_send_csv {
+            background-position: -46px -144px
+        }
+
+        .i_doc_in {
+            background-position: -243px 0
+        }
+
+        .i_doc_out {
+            background-position: -289px 0
+        }
+
+        .i_doc_lock {
+            background-position: -192px -48px
+        }
+
+        .i_doc_unlock {
+            background-position: -240px -48px
+        }
+
+        .i_send_pdf {
+            background-position: -288px -189px
+        }
+
+        #PropuestaList {
+            border: solid 1px silver;
+            position: absolute;
+            top: 7em;
+            left: .5em;
+            right: .5em;
+            bottom: .5em;
+            overflow: auto;
+            box-sizing: border-box;
+        }
+
+            #PropuestaList .refItem {
+                color: Gray;
+                height: 3.5em;
+                margin: .5em;
+                padding: .2em .5em;
+                box-sizing: border-box;
+                border: solid 1px silver;
+                position: relative;
+                border-radius: .5em;
+            }
+
+                #PropuestaList .refItem input {
+                    position: absolute;
+                    right: 1em;
+                    top: 20%;
+                }
+
+                #PropuestaList .refItem > div {
+                    font-weight: bold;
+                    font-size: 11px;
+                }
+
+                    #PropuestaList .refItem > div span {
+                        font-weight: normal;
+                    }
+
+
+        @@media screen and (max-width: 1675px) {
+            .G5 {
+                width: 24.15%;
+            }
+        }
+
+        @@media screen and (max-width: 1383px) {
+            .G5 {
+                width: 32%;
+            }
+        }
+
+        @@media screen and (max-width: 1100px) {
+            .G5 {
+                width: 48.40%;
+            }
+        }
+
+        @@media screen and (max-width: 800px) {
+            .G5 {
+                width: 98%;
+                height: 10em;
+            }
+        }
+
+        @@media screen and (max-width: 600px) {
+            .G5 {
+                height: 12em;
+            }
+        }
+
+        @@media screen and (max-width: 480px) {
+            #MainContainer {
+                overflow-x: hidden;
+                min-height: 40em;
+            }
+        }
+    </style>
+    <script type="text/javascript" src="js/MAPA.js"></script>
+    <script type="text/javascript">
+
+        var _CONST = {
+            AppName: 'PromoVino'
+        };
+        var _error = false;
+        var _CCAA = [];
+
+        var _getNombreComunidad = function (code, clear) {
+            if (clear) return _CCAA.Item('c', code, { d: '' }).d.replace(/\s(\(([^\)]+)\))/, '');
+            return _CCAA.Item('c', code, { d: '' }).d;
+        }
+
+        MAPA.DocManager.OnDocumentReady = function () {
+            MAPA.InitMobileMenuButtons('default.aspx', true);
+            MAPA.SplitHelper.DefaultAnimation();
+            if (_error) return;
+        }
+
+    </script>
+</head>
+<body scroll="no">
+    <form id="form1">
+        @Html.Raw(Core.Controls.RenderHeader())
+        @Html.Raw(Core.Controls.RenderMenu())
+
+        <div class="spliter" id="splitter"></div>
+        <div class="MainContainer" id="MainContainer" runat="server">
+
+            <h4 class="Titulo1">Tareas comunes</h4>
+
+            <div class="G5" id="TaskEjercicios" runat="server">
+                <div class="G5-image i_tables_b"></div>
+                <h5><a class="link" href="pages/Ejercicio.aspx">Ejercicios</a></h5>
+                Permite gestionar los <b>ejercicios</b>.
+                <div class="G5-buttons">
+                    <a class="link" href="pages/Ejercicio.aspx">Ir a la página</a>
+                </div>
+            </div>
+
+            <div class="G5" id="TaskUserReports" runat="server">
+                <div class="G5-image i_doc_rpt"></div>
+                <h5><a class="link" href="pages/Reports.aspx">Informes</a></h5>
+                Permite aceder a los distintos informes de <b>AppTemplate</b>.
+                <div class="G5-buttons">
+                    <a class="link" href="pages/Reports.aspx">Ir a la página</a>
+                </div>
+            </div>
+
+            <div class="G5" id="TaskHelp" runat="server">
+                <div class="G5-image i_docs"></div>
+                <h5><a class="link" href="pages/Documentacion.aspx">Descarga de documentos</a></h5>
+                Manuales del funcionamiento de la aplicación y documentos, archivos y guías útiles para la carga masiva de datos.
+                <div class="G5-buttons">
+                    <a class="link" href="pages/Documentacion.aspx">Ir a la página</a>
+                </div>
+            </div>
+
+            <h4 class="Titulo1 group-title">Carga de datos</h4>
+
+            <div class="G5" id="TaskDatos" runat="server">
+                <div class="G5-image i_send_csv"></div>
+                <h5><a class="link" href="pages/Data/list.aspx">Carga de datos</a></h5>
+                Permite carga y/o modificacar masivamente de los datos de las <b>Listas provisionales</b> y de los <b>progrmas</b> por medio de archivos de texto (<b>.csv</b>).
+                <div class="G5-buttons">
+                    <a class="link" href="pages/Data/Send.aspx">Nueva carga</a>
+                    <a class="link" href="pages/Data/list.aspx">Consulta de cargas</a>
+                </div>
+            </div>
+
+            <h4 id="HeaderTablasAuxiliares" class="Titulo1 group-title" runat="server">Tablas auxiliares</h4>
+
+            <div id="TaskAcciones" class="G5" runat="server">
+                <div class="G5-image i_tables"></div>
+                <h5><a class="link" href="pages/Accion.aspx">Tipos de acciones</a></h5>
+                Permite gestionar el alta, edición o borrado de los tipos de acciones.
+                <div class="G5-buttons">
+                    <a class="link" href="pages/Accion.aspx">Ir a la página</a>
+                </div>
+            </div>
+
+            <h4 class="Titulo1 group-title">Administración</h4>
+            <div class="G5" id="TaskUsers" runat="server">
+                <div class="G5-image i_users"></div>
+                <h5><a class="link" href="Regeus.UAdmin.aspx">Gestión de usuarios</a></h5>
+                Permite a los <b>administradores</b> la gestión de usuarios.
+                <div class="G5-buttons">
+                    <a class="link" href="Regeus.UAdmin.aspx">Ir a la página</a>
+                </div>
+            </div>
+
+            <div class="G5" id="TaskAdmin" runat="server">
+                <div class="G5-image i_admin"></div>
+                <h5>Servicios Web<span class="task-sub-title">(Administración)</span></h5>
+                Permite la gestión de los usuarios de los servicios WEB y la consulta de las peticiones realizadas.
+                <div class="G5-buttons">
+                    <a class="link" href="Pages/Admin/Reports.aspx">Informes</a>
+                    <a class="link" href="Pages/Admin/WSAdmin.aspx">Gestión de usuarios</a>
+                </div>
+            </div>
+
+            <input type="text" id="Text1" style="visibility: hidden;height: 0; width:0" />
+        </div>
+
+        @Html.Raw(@Core.Controls.RenderFooter())
+
+    </form>
+
+    <div style="display:none">
+
+    </div>
+
+</body>
+</html>
