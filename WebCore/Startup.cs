@@ -1,7 +1,7 @@
 ﻿
 namespace WebCore
 {
-
+  //
   using Core.Logging;
   using Microsoft.AspNetCore.Builder;
   using Microsoft.AspNetCore.Hosting;
