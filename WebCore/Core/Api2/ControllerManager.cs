@@ -4,10 +4,24 @@ namespace Core.Api2.Controlers
 
   using Microsoft.AspNetCore.Http;
   using System;
+  using System.Collections.Generic;
   using System.Reflection;
   using System.Linq;
+  using System.Text.RegularExpressions;
 
   public class ControllerManager {
+
+    static readonly Dictionary<string,Type> _controllers = null;
+    static readonly string[] _lines = null;
+    static ControllerManager()
+    {
+      _controllers = Assembly.GetAssembly(typeof(Core.Api2.Controlers.BaseController))
+                             .GetTypes()
+                             .Where(t => typeof(Api2.Controlers.BaseController).IsAssignableFrom(t))
+                             .ToDictionary( t => t.FullName, t => t);
+      _lines = new string[] {"WebCore.Api2.Controlers.TypeAController /api/v2/datos-maestros/productores",
+                             "WebCore.Api2.Controlers.TypeBController /api/v2/datos-maestros/otros"};
+    }
 
     public ActionResult RouteRequest(HttpContext context) {
 
@@ -30,48 +44,36 @@ namespace Core.Api2.Controlers
           StatusCode = 401,
           Content = "Token is not present" };
       }
-      // ================================================================================================
+      // ==============================================================================
       // Resolve controller
-      // ================================================================================================
-      string[] __lines = {"/api/v2/datos-maestros/productores#WebCore.Api2.Controlers.TypeAController",
-                          "/api/v2/datos-maestros/otros#WebCore.Api2.Controlers.TypeAController"};
-
-      var __className = __lines.Where(l => {
-                                  var __t = l.Split("#");
-                                  return new System.Text.RegularExpressions.Regex(__t[0], System.Text.RegularExpressions.RegexOptions.IgnoreCase)
-                                                                           .Match(context.Request.Path.Value)
-                                                                           .Success;
-                                }).FirstOrDefault();
-
-      //var __segment = context.Request.Path.Value.Split("/")[3];
-
-      //var __map = new System.Collections.Generic.Dictionary<string, string>();
-      //__map.Add("tipoa", "WebCore.Api2.Controlers.TypeAController");
-      //__map.Add("tipob", "WebCore.Api2.Controlers.TypeBController");
-
-      //var __className = "";
-      //if (__map.ContainsKey(__segment.ToLower()))
-      //{
-      //  __className = __map[__segment.ToLower()];
-      //}
-
-      var __controllers = Assembly.GetAssembly(typeof(Core.Api2.Controlers.BaseController))
-                                  .GetTypes()
-                                  .Where(t => typeof(Api2.Controlers.BaseController).IsAssignableFrom(t))
-                                  .ToDictionary( t => t.FullName, 
-                                                 t => t);
-      if(__controllers.ContainsKey(__className)){
-        var __controler = Activator.CreateInstance( __controllers[__className], new object[] { context });
-        return ((Core.Api2.Controlers.BaseController)__controler).HandleRequest();
+      // ==============================================================================
+      var __controller = ResolveControler(context);
+      if(__controller is null)
+      {
+        return new ActionResult() {
+          StatusCode = 404,
+          Content = string.Format("Controller not found for {0}", context.Request.Path)
+        };
       }
-      return new ActionResult() { StatusCode = 404, 
-                                  Content = string.Format("Controller not found for {0}", 
-                                                           context.Request.Path) };
+      return ((Core.Api2.Controlers.BaseController)__controller).HandleRequest();
     }
 
     public ActionResult RouteAuth(HttpContext context)
     {
       return new JwtAuthController(context).HandleRequest();
+    }
+
+    private BaseController ResolveControler(HttpContext context)
+    {
+      string __path = context.Request.Path.Value.ToLower();     
+      string __className = (_lines.Select( l => l.Split(" ", StringSplitOptions.RemoveEmptyEntries))
+                                  .Where(tokens => __path.StartsWith(tokens[1]))
+                                  .FirstOrDefault() ?? new string[] { "",""}
+                           )[0];
+      if(__className != "" && _controllers.ContainsKey(__className)){
+        return (BaseController)Activator.CreateInstance(_controllers[__className], new object[] { context });        
+      }
+      return null;
     }
   }
 

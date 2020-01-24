@@ -30,7 +30,7 @@ namespace WebCore.Api2.Controlers
       
       return new ActionResult() {
         StatusCode = 200,
-        Content = String.Format("TypeAController -> {0}\n{1}\n{2}\n{3}\n{4}",
+        Content = String.Format("TypeBController -> {0}\n{1}\n{2}\n{3}\n{4}",
                                 _context.Request.Method,
                                 _context.Request.Path.Value,
                                 _context.Request.QueryString,
