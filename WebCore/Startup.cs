@@ -83,6 +83,7 @@ namespace WebCore
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials());
+
       app.UseStaticFiles();
       //app.UseAuthentication();
       //app.UseMvc();
@@ -102,9 +103,11 @@ namespace WebCore
 
         if(__Proc is null)
         {
-          context.Response.StatusCode = 404;
-          await context.Response.WriteAsync("Resource not found");
+          context.Response.Redirect("index.html");
           return;
+          //context.Response.StatusCode = 404;
+          //await context.Response.WriteAsync("Resource not found");
+          //return;
         }
        
         Core.Api2.Controlers.ActionResult __result = __Proc.Invoke(context);
