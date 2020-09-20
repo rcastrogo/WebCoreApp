@@ -1,0 +1,395 @@
+{
+	"info": {
+		"_postman_id": "d91b3f04-7d7c-4560-8e45-6383f82eaff3",
+		"name": "JWToken",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetToken",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6ee1a94f-eb0b-4065-b76e-08897dd45e6a",
+						"exec": [
+							"var data = pm.response.json();\r",
+							"pm.environment.set(\"token\", data.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/auth/login/:username/:password",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login",
+						":username",
+						":password"
+					],
+					"variable": [
+						{
+							"key": "username",
+							"value": "04179642J"
+						},
+						{
+							"key": "password",
+							"value": "rr66"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAll",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6ee1a94f-eb0b-4065-b76e-08897dd45e6a",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "txt4",
+							"value": "dsafdfas",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/auth",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Estados - GetAll",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6ee1a94f-eb0b-4065-b76e-08897dd45e6a",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"type": "text",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/estados-expediente?33=hola",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"estados-expediente"
+					],
+					"query": [
+						{
+							"key": "33",
+							"value": "hola"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Autorización (getToken)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6ee1a94f-eb0b-4065-b76e-08897dd45e6a",
+						"exec": [
+							"var data = pm.response.text();\r",
+							"pm.environment.set(\"token\", data);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/plain",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"Username\" : \"RafaelCastro\",\n \"Password\" : \"xx555\"\n}",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/auth/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TypeAController (Productores)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6ee1a94f-eb0b-4065-b76e-08897dd45e6a",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "txt4",
+							"value": "dsafdfas",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v2/datos-maestros/productores/iii?action=save",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"datos-maestros",
+						"productores",
+						"iii"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "save"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TypeBController (otros)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6ee1a94f-eb0b-4065-b76e-08897dd45e6a",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "txt4",
+							"value": "dsafdfas",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v2/datos-maestros/otros/iii?action=save",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"datos-maestros",
+						"otros",
+						"iii"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "save"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"protocolProfileBehavior": {}
+}
